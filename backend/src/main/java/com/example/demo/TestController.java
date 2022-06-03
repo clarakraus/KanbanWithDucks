@@ -45,7 +45,12 @@ public class TestController {
     }
     @GetMapping(path = "/{todoid}")
     public ToDo getTodoTask(@PathVariable String todoid){
-        return toDoService.getTaskToddo(todoid);
+        return toDoService.getTaskTodo(todoid);
     }
+    @PutMapping()
+    public void editTodoTask(@RequestBody ToDo todo){
+        toDoService.editTaskAndDesc(todo);
+    }
+
 
 }

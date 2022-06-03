@@ -38,7 +38,13 @@ public class ToDoService {
         toDoRepo.list().removeIf(toDo -> toDo.getId().equals(todoid));
     }
 
-    public ToDo getTaskToddo(String todoid) {
+    public ToDo getTaskTodo(String todoid) {
        return toDoRepo.findToDoById(todoid).orElseThrow();
+    }
+
+    public void editTaskAndDesc(ToDo todo) {
+        ToDo taskToEdit = toDoRepo.findToDoById(todo.getId()).orElseThrow();
+        taskToEdit.setTask(todo.getTask());
+        taskToEdit.setDescription(todo.getDescription());
     }
 }
