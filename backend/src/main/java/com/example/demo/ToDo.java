@@ -22,6 +22,6 @@ public class ToDo {
     private final String id = UUID.randomUUID().toString();
     private String task;
     private String description;
-    private Enum status;
+    private Status status;
 
 }

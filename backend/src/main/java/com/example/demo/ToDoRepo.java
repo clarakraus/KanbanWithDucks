@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,13 +17,17 @@ public final class ToDoRepo {
     private List<ToDo> toDoList = new ArrayList<>();
 
     public List<ToDo> list() {
-        return List.of(new ToDo("Staubsaugen", "Schlafzimmer und Küche saugen", Status.OPEN),
-                new ToDo("FreitagsAufgabe", "das Übliche", Status.IN_PROGRESS),
-                new ToDo("Kochen", "auch das Übliche", Status.DONE));
+        return toDoList;
     }
 
 
     public void add(ToDo todo) {
         toDoList.add(todo);
+    }
+
+    public Optional<ToDo> findToDoById(String id){
+        return toDoList.stream()
+                .filter(toDo -> toDo.getId().equals(id))
+                .findFirst();
     }
 }

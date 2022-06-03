@@ -27,8 +27,25 @@ public class TestController {
     @PostMapping()
     public void addToDo(@RequestBody ToDo todo){
         toDoService.addNew(todo);
+    }
+
+    @PutMapping("/next")
+    public void moveToNextState(@RequestBody ToDo todo){
+        toDoService.changeState(todo);
+    }
+    @PutMapping("/prev")
+    public void setToPrevState(@RequestBody ToDo todo){
+        toDoService.setBackState(todo);
+    }
 
 
+    @DeleteMapping(path ="{todoid}")
+    public void removeToDoTask(@PathVariable String todoid){
+        toDoService.deleteTask(todoid);
+    }
+    @GetMapping(path = "/{todoid}")
+    public ToDo getTodoTask(@PathVariable String todoid){
+        return toDoService.getTaskToddo(todoid);
     }
 
 }
