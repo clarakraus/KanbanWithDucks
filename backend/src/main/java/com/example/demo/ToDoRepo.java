@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public final class ToDoRepo {
+public class ToDoRepo {
     private List<ToDo> toDoList = new ArrayList<>();
 
     public List<ToDo> list() {
