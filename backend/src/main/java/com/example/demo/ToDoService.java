@@ -11,7 +11,7 @@ import java.util.List;
 public class ToDoService {
     private final ToDoRepo toDoRepo;
 
-    public List<ToDo> getTodo() {
+    public List<ToDo> getTodos() {
         return toDoRepo.list();
     }
 
@@ -35,7 +35,7 @@ public class ToDoService {
     }
 
     public void deleteTask(String todoid) {
-        toDoRepo.list().removeIf(toDo -> toDo.getId().equals(todoid));
+        toDoRepo.delete(todoid);
     }
 
     public ToDo getTaskTodo(String todoid) {

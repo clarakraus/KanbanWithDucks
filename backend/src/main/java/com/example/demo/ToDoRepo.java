@@ -20,6 +20,9 @@ public class ToDoRepo {
         return toDoList;
     }
 
+    public void delete(String todoid){
+        toDoList.removeIf(toDo -> toDo.getId().equals(todoid));
+    }
 
     public void add(ToDo todo) {
         toDoList.add(todo);
