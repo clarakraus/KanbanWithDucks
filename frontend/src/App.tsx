@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {KanBanBoard} from "./KanBanBoard";
 
 function App() {
 
-    const [greeting, setGreeting] = useState('')
+    /*const [greeting, setGreeting] = useState('')
 
     useEffect(() => {
         fetch('/api/greeting', {
@@ -16,9 +17,11 @@ function App() {
             .catch(err => setGreeting('Da ist etwas schief gelaufen'));
     }, []);
 
+     */
+
     return (
         <div>
-            {greeting}
+            <KanBanBoard/>
         </div>
     );
 }
