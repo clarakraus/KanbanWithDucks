@@ -1,0 +1,12 @@
+.FunWithColumns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+.BoardOrga{
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
+}
