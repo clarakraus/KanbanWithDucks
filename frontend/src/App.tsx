@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {KanBanBoard} from "./KanBanBoard";
-import "./Body.css"
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import MainPage from "./MainPage";
+import EditPage from "./EditPage";
 
-function App() {
-
-    /*const [greeting, setGreeting] = useState('')
-
-    useEffect(() => {
-        fetch('/api/greeting', {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        })
-            .then(response => response.text())
-            .then(text => setGreeting(text))
-            .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    }, []);
-
-     */
-
+export function App(){
     return (
-        <div>
-            <KanBanBoard/>
-        </div>
-    );
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<MainPage/>}/>
+                <Route path= "/:taskid" element={<EditPage/>}/>
+            </Routes>
+        </BrowserRouter>
+    )
+
 }
 
-export default App;

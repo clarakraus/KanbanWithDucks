@@ -2,6 +2,7 @@ import {EnumStatus, Task} from "./model";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import "./KanBanKarte.css"
+import {NavLink} from "react-router-dom";
 
 interface KanBanKartenProps{
     task: Task;
@@ -51,7 +52,9 @@ export function KanBanKarte(props: KanBanKartenProps) {
                 <span>Status: {props.task.status} </span>
             </div>
             <div className="Buttons">
-                <button onClick={()=> setEditMode(editMode =>!editMode)}>edit</button>
+                <NavLink to= {`/${props.task.id}`}>
+                    <button>edit</button>
+                </NavLink>
                 {props.task.status === EnumStatus.OPEN && <span>
                         <button onClick={deleteTask}>delete</button>
                         <button onClick={setNext}>next</button> </span>
@@ -65,11 +68,8 @@ export function KanBanKarte(props: KanBanKartenProps) {
                         <button onClick={setPrevious}>previous</button>
                     <button onClick={deleteTask}>delete</button> </span>}
 
+
             </div>
-            {editMode && <div>
-                <span>To Do <input type = "text" onChange={ev => setNewTask(ev.target.value)} value={newTask}/><br/></span>
-                <span>Description <input type = "text" onChange={ev => setNewDescription(ev.target.value)} value={newDescription}/></span>
-            </div>}
         </div>
     )
 }
