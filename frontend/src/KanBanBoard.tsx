@@ -10,9 +10,9 @@ export function KanBanBoard(){
     const [newTask, setNewTask] = useState("")
     const [newDescription, setNewDescription] = useState("")
     const [taskArray, setTaskArray] = useState<Array<Task>>([])
+    const taskComponents = taskArray.map(t => <KanBanKarte task={t} onTaskChange={getStuff}/>)
 
     function getStuff(){
-        console.log("Hallo")
         fetch("http://localhost:8080/api/kanban", {method: "GET"})
             .then(response =>response.json())
             .then(data => setTaskArray(data))
@@ -28,12 +28,6 @@ export function KanBanBoard(){
             .then(getStuff)
             .then(() => setNewTask(""))
             .then(() => setNewDescription(""))
-
-
-
-    }
-    function regelt(){
-        return taskArray.map(t => <KanBanKarte task={t} onTaskChange={getStuff} />)
     }
 
     return(
@@ -49,9 +43,9 @@ export function KanBanBoard(){
                 </div>
             </div>
             <div className= "FunWithColumns">
-                <span> <h2>Open</h2> {regelt().filter(t => t.props.task.status === EnumStatus.OPEN)} </span>
-                <span> <h2>In Progress</h2> {regelt().filter(t => t.props.task.status === EnumStatus.IN_PROGRESS)} </span>
-                <span> <h2>Done</h2> {regelt().filter(t => t.props.task.status === EnumStatus.DONE)} </span>
+                <span> <h2>Open</h2> {taskComponents.filter(t => t.props.task.status === EnumStatus.OPEN)} </span>
+                <span> <h2>In Progress</h2> {taskComponents.filter(t => t.props.task.status === EnumStatus.IN_PROGRESS)} </span>
+                <span> <h2>Done</h2> {taskComponents.filter(t => t.props.task.status === EnumStatus.DONE)} </span>
 
             </div>
 

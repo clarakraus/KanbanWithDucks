@@ -5,9 +5,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/kanban")
 @RequiredArgsConstructor
+
 public class TestController {
     private final ToDoService toDoService;
 
