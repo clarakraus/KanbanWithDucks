@@ -7,6 +7,7 @@ export default function EditPage() {
 
     const [task, setTask] = useState(localStorage.getItem("taskinput")?? "");
     const [newDescription, setNewDescription] = useState(localStorage.getItem("descriptioninput")?? "");
+    const [errorMessage, setErrorMessage] = useState("")
     const [item, setItem] = useState<Task>()
     const params = useParams()
     const nav = useNavigate()
@@ -27,19 +28,22 @@ export default function EditPage() {
                 setTask(data.task)
                 setNewDescription(data.description)
                 setItem(data)
+                setErrorMessage("")
                 }
             )
 
     }, [params.taskid])
 
     const getUpdateKanban = (item: Task) => {
-        return axios.put(`http://localhost:8080/api/kanban`, item)
+        return axios.put(`http://localhost:8080/api/kanbanus`, item)
             .then(response => response.data)
+            .catch(() => setErrorMessage("Ooopsies, something went wrong. Guess you have to stick to your task as it is 🫠"))
     }
 
     const updateKanban = () =>{
       item &&  getUpdateKanban({id:item.id, task:task, description:newDescription, status:item?.status})
-          .then(()=> nav("/"))
+          .then(errorMessage => (errorMessage === "")? nav("/"):console.log(errorMessage)
+    )
     }
 
     return (
@@ -48,6 +52,11 @@ export default function EditPage() {
                 <span>To Do <input type = "text" onChange={ev => setTask(ev.target.value)} value={task}/><br/></span>
                 <span>Description <input type = "text" onChange={ev => setNewDescription(ev.target.value)} value={newDescription}/></span>
                 <button type= "submit" onClick={updateKanban}>save changes</button>
+            {errorMessage &&
+                <div className="error">
+                    {errorMessage}
+                </div>
+            }
         </div>
     )
 }
