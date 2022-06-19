@@ -35,7 +35,7 @@ export default function EditPage() {
     }, [params.taskid])
 
     const getUpdateKanban = (item: Task) => {
-        return axios.put(`http://localhost:8080/api/kanbanus`, item)
+        return axios.put(`http://localhost:8080/api/kanbangit`, item)
             .then(response => response.data)
             .catch(() => setErrorMessage("Ooopsies, something went wrong. Guess you have to stick to your task as it is 🫠"))
     }
