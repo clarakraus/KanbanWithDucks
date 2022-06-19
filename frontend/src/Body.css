@@ -3,3 +3,10 @@ body{
     color: #BF9270;
     font-family: Optima;
 }
+.error{
+    display: flex;
+    flex-direction: column;
+    color:hotpink;
+    font-family: "Apple SD Gothic Neo";
+    font-size: larger;
+}
