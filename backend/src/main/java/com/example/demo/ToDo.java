@@ -18,6 +18,7 @@ statusEnum = ["OPEN","IN_PROGRESS","DONE"]
  */
 @Data
 @Document(collection = "tasks")
+@NoArgsConstructor
 
 public class ToDo {
     @Id

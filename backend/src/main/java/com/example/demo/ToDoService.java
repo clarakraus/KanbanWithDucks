@@ -50,5 +50,6 @@ public class ToDoService {
         ToDo taskToEdit = toDoRepo.findById(todo.getId()).orElseThrow();
         taskToEdit.setTask(todo.getTask());
         taskToEdit.setDescription(todo.getDescription());
+        toDoRepo.save(taskToEdit);
     }
 }

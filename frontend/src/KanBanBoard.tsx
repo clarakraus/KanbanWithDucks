@@ -10,7 +10,7 @@ export function KanBanBoard(){
     const [newTask, setNewTask] = useState("")
     const [newDescription, setNewDescription] = useState("")
     const [taskArray, setTaskArray] = useState<Array<Task>>([])
-    const taskComponents = taskArray.map(t => <KanBanKarte task={t} onTaskChange={getStuff}/>)
+    const taskComponents = taskArray.map(t => <KanBanKarte key= {t.id} task={t} onTaskChange={getStuff}/>)
 
     function getStuff(){
         fetch("/api/kanban", {method: "GET"})
