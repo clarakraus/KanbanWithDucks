@@ -15,7 +15,7 @@ export default function EditPage() {
     useEffect(() =>{
         localStorage.setItem("taskinput", task)
         localStorage.setItem("descriptioninput", newDescription)
-    }, [task || newDescription]);
+    }, [task, newDescription]);
 
     function getTaskById(id: string){
        return axios.get(`http://localhost:8080/api/kanban/${id}`)
@@ -35,7 +35,7 @@ export default function EditPage() {
     }, [params.taskid])
 
     const getUpdateKanban = (item: Task) => {
-        return axios.put(`http://localhost:8080/api/kanbanjk`, item)
+        return axios.put(`http://localhost:8080/api/kanban`, item)
             .then(response => response.data)
             .catch(() => setErrorMessage("Ooopsies, something went wrong. Guess you have to stick to your task as it is 🫠"))
     }

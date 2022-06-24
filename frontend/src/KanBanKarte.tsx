@@ -14,19 +14,23 @@ const url = "http://localhost:8080/api/kanban"
 
 export function KanBanKarte(props: KanBanKartenProps) {
 
-    const[editMode, setEditMode] = useState(false)
-    const [newTask, setNewTask] = useState(props.task.task)
-    const [newDescription, setNewDescription] = useState(props.task.description)
 
-    useEffect(() =>{
-        edit()
-    }, [newTask, newDescription])
+    const [duckInProgress, setDuckInProgress] = useState(false)
 
     function setNext() {
         axios.put(`${url}/next`, props.task)
             .then(props.onTaskChange)
-
     }
+
+    useEffect(() =>{
+        if(props.task.status ===EnumStatus.IN_PROGRESS){
+            setDuckInProgress(true)
+          setTimeout(()=> setDuckInProgress(false), 6000)
+        }
+    }, [props.task.status])
+
+
+
     function setPrevious() {
         axios.put(`${url}/prev`, props.task)
             .then(props.onTaskChange)
@@ -35,13 +39,6 @@ export function KanBanKarte(props: KanBanKartenProps) {
     const deleteTask = () => {
         axios.delete(`${url}/${props.task.id}`)
             .then(props.onTaskChange)
-    }
-
-    function edit(){
-        axios.put(url, {task: newTask, description: newDescription, status: props.task.status, id: props.task.id})
-            .then( () => props.onTaskChange())
-            .catch(error => console.log(error))
-
     }
 
     return (
@@ -68,8 +65,11 @@ export function KanBanKarte(props: KanBanKartenProps) {
                         <button onClick={setPrevious}>previous</button>
                     <button onClick={deleteTask}>delete</button> </span>}
 
-
             </div>
+            {duckInProgress &&
+                <div>
+                    <img src="https://i.gifer.com/XOsX.gif"/>
+                </div>}
         </div>
     )
 }
