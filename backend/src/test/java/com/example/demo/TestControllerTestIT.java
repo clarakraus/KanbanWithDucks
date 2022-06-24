@@ -29,8 +29,10 @@ class TestControllerTestIT {
         ResponseEntity<ToDo[]> getResponse1 = restTemplate.getForEntity("/api/kanban", ToDo[].class);
 
         Assertions.assertThat(getResponse1.getBody().length).isEqualTo(3);
-        restTemplate.put("/api/kanban/next", todo1, Void.class);
-        ResponseEntity<ToDo> getResponse2 = restTemplate.getForEntity("/api/kanban/" + todo1.getId(), ToDo.class);
+        ToDo responseToDo = getResponse1.getBody()[0];
+
+        restTemplate.put("/api/kanban/next", responseToDo, Void.class);
+        ResponseEntity<ToDo> getResponse2 = restTemplate.getForEntity("/api/kanban/" + responseToDo.getId(), ToDo.class);
         Assertions.assertThat(getResponse2.getBody().getStatus()).isEqualTo((Status.IN_PROGRESS));
     }
 

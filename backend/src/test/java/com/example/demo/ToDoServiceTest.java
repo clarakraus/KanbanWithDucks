@@ -14,25 +14,25 @@ class ToDoServiceTest {
     @Test
     void shouldAddTask(){
         //given
-    ToDoRepo testRepo = Mockito.mock(ToDoRepo.class);
+    DBRepository testRepo = Mockito.mock(DBRepository.class);
     ToDo newTask = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
     ToDoService testService = new ToDoService(testRepo);
 
     testService.addNew(newTask);
 
 
-    Mockito.verify(testRepo).add(newTask);
+    Mockito.verify(testRepo).save(newTask);
     }
 
     @Test
     void shouldReturnAllTodos() {
-        ToDoRepo testRepo = Mockito.mock(ToDoRepo.class);
+        DBRepository testRepo = Mockito.mock(DBRepository.class);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDo task2 = new ToDo("Tee trinken", "hektisch", Status.IN_PROGRESS);
         ToDo task3 = new ToDo("Wasser trinken", "langsam", Status.OPEN);
         ToDoService testService = new ToDoService(testRepo);
 
-        Mockito.when(testRepo.list()).thenReturn(List.of(task1, task2, task3));
+        Mockito.when(testRepo.findAll()).thenReturn(List.of(task1, task2, task3));
 
 
         org.assertj.core.api.Assertions.assertThat(testService.getTodos()).isEqualTo(List.of(task1, task2, task3));
@@ -41,7 +41,7 @@ class ToDoServiceTest {
     @Test
     void shouldDeleteTask(){
         //given
-        ToDoRepo testRepo = Mockito.mock(ToDoRepo.class);
+        DBRepository testRepo = Mockito.mock(DBRepository.class);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDo task2 = new ToDo("Tee trinken", "hektisch", Status.OPEN);
         ToDoService testService = new ToDoService(testRepo);
@@ -50,7 +50,7 @@ class ToDoServiceTest {
         testService.deleteTask(task1.getId());
 
 
-        Mockito.verify(testRepo).delete(task1.getId());
+        Mockito.verify(testRepo).deleteById(task1.getId());
     }
 
    /* @Test
@@ -70,7 +70,7 @@ class ToDoServiceTest {
     @Test
 
     void shouldDeleteToDo(){
-        ToDoRepo testRepo = new ToDoRepo();
+        DBRepository testRepo = Mockito.mock(DBRepository.class);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDoService testService = new ToDoService(testRepo);
 
@@ -78,23 +78,23 @@ class ToDoServiceTest {
 
         testService.deleteTask(task1.getId());
 
-        org.junit.jupiter.api.Assertions.assertTrue(testRepo.list().size() == 0);
+        org.junit.jupiter.api.Assertions.assertTrue(testRepo.findAll().size() == 0);
     }
 
     @Test
 
     void shouldDeleteToDo2(){
 
-        ToDoRepo testRepo = Mockito.mock(ToDoRepo.class);
+        DBRepository testRepo = Mockito.mock(DBRepository.class);
         ToDoService testService = new ToDoService(testRepo);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDo task2 = new ToDo("Tee trinken", "hektisch", Status.IN_PROGRESS);
-        List<ToDo> testList = new ArrayList<>();
-        testList.add(task1);
-        testList.add(task2);
-        Mockito.when(testRepo.list()).thenReturn(testList);
+        testService.addNew(task1);
+        testService.addNew(task2);
+        Mockito.when(testRepo.findAll()).thenReturn(List.of(task2));
         testService.deleteTask(task1.getId());
-        Assertions.assertThat(testRepo.list()).containsOnly(task2);
+        Assertions.assertThat(testRepo.findAll()).containsOnly(task2);
+        Mockito.verify(testRepo).deleteById(task1.getId());
 
     }
 

@@ -13,7 +13,7 @@ export function KanBanBoard(){
     const taskComponents = taskArray.map(t => <KanBanKarte task={t} onTaskChange={getStuff}/>)
 
     function getStuff(){
-        fetch("http://localhost:8080/api/kanban", {method: "GET"})
+        fetch("/api/kanban", {method: "GET"})
             .then(response =>response.json())
             .then(data => setTaskArray(data))
     }
@@ -23,7 +23,7 @@ export function KanBanBoard(){
     }, [])
 
     function taskClick (){
-        axios.post("http://localhost:8080/api/kanban",
+        axios.post("/api/kanban",
             {task: newTask, description: newDescription, status: EnumStatus.OPEN})
             .then(getStuff)
             .then(() => setNewTask(""))

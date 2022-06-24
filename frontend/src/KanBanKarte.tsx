@@ -10,7 +10,7 @@ interface KanBanKartenProps{
 
 }
 
-const url = "http://localhost:8080/api/kanban"
+const url = "/api/kanban"
 
 export function KanBanKarte(props: KanBanKartenProps) {
 
@@ -68,7 +68,7 @@ export function KanBanKarte(props: KanBanKartenProps) {
             </div>
             {duckInProgress &&
                 <div>
-                    <img src="https://i.gifer.com/XOsX.gif"/>
+                    <img src="https://i.gifer.com/XOsX.gif" alt = "funny duck gif"/>
                 </div>}
         </div>
     )

@@ -9,41 +9,45 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class ToDoService {
-    private final ToDoRepo toDoRepo;
+    private final DBRepository toDoRepo;
+
 
     public List<ToDo> getTodos() {
-        return toDoRepo.list();
+        return toDoRepo.findAll();
     }
 
     public void addNew(ToDo todo) {
-            toDoRepo.add(todo);
+            toDoRepo.save(todo);
     }
     public void changeState(ToDo todo) {
-        ToDo wantedToDo = toDoRepo.findToDoById(todo.getId()).orElseThrow();
+        ToDo wantedToDo = toDoRepo.findById(todo.getId()).orElseThrow();
         switch (wantedToDo.getStatus()) {
             case OPEN -> wantedToDo.setStatus(Status.IN_PROGRESS);
             case IN_PROGRESS -> wantedToDo.setStatus(Status.DONE);
+
         }
+        toDoRepo.save(wantedToDo);
     }
 
     public void setBackState(ToDo todo) {
-        ToDo wantedToDo = toDoRepo.findToDoById(todo.getId()).orElseThrow();
+        ToDo wantedToDo = toDoRepo.findById(todo.getId()).orElseThrow();
         switch (wantedToDo.getStatus()) {
             case IN_PROGRESS -> wantedToDo.setStatus(Status.OPEN);
             case DONE -> wantedToDo.setStatus(Status.IN_PROGRESS);
         }
+        toDoRepo.save(wantedToDo);
     }
 
     public void deleteTask(String todoid) {
-        toDoRepo.delete(todoid);
+        toDoRepo.deleteById(todoid);
     }
 
     public ToDo getTaskTodo(String todoid) {
-       return toDoRepo.findToDoById(todoid).orElseThrow();
+       return toDoRepo.findById(todoid).orElseThrow();
     }
 
     public void editTaskAndDesc(ToDo todo) {
-        ToDo taskToEdit = toDoRepo.findToDoById(todo.getId()).orElseThrow();
+        ToDo taskToEdit = toDoRepo.findById(todo.getId()).orElseThrow();
         taskToEdit.setTask(todo.getTask());
         taskToEdit.setDescription(todo.getDescription());
     }

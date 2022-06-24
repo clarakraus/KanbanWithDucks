@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Task} from "./model";
@@ -18,7 +18,7 @@ export default function EditPage() {
     }, [task, newDescription]);
 
     function getTaskById(id: string){
-       return axios.get(`http://localhost:8080/api/kanban/${id}`)
+       return axios.get(`/api/kanban/${id}`)
            .then(response => response.data)
     }
 
@@ -35,7 +35,7 @@ export default function EditPage() {
     }, [params.taskid])
 
     const getUpdateKanban = (item: Task) => {
-        return axios.put(`http://localhost:8080/api/kanban`, item)
+        return axios.put(`/api/kanban`, item)
             .then(response => response.data)
             .catch(() => setErrorMessage("Ooopsies, something went wrong. Guess you have to stick to your task as it is 🫠"))
     }
