@@ -33,7 +33,6 @@ public class TestController {
         toDoService.setBackState(todo);
     }
 
-
     @DeleteMapping(path ="{todoid}")
     public void removeToDoTask(@PathVariable String todoid){
         toDoService.deleteTask(todoid);

@@ -10,3 +10,6 @@ export interface Task{
     status: EnumStatus;
     id?: string;
 }
+export interface LoginResponse{
+    token: string
+}

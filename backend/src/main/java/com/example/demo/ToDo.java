@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.MyUser.MyUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,8 @@ public class ToDo {
     private String task;
     private String description;
     private Status status;
+
+    private String userID;
 
     public ToDo(String task, String description, Status status) {
         this.task = task;
