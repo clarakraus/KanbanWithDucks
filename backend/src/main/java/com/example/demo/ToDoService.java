@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.MyUser.MyUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,13 @@ public class ToDoService {
     private final DBRepository toDoRepo;
 
 
-    public List<ToDo> getTodos() {
-        return toDoRepo.findAll();
+    public List<ToDo> getTodos(String userId) {
+        return toDoRepo.findAllByUserId(userId);
     }
 
-    public void addNew(ToDo todo) {
-            toDoRepo.save(todo);
+    public void addNew(ToDo todo, String userId) {
+        todo.setUserId(userId);
+        toDoRepo.save(todo);
     }
     public void changeState(ToDo todo) {
         ToDo wantedToDo = toDoRepo.findById(todo.getId()).orElseThrow();

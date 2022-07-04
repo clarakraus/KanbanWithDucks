@@ -4,10 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 class ToDoServiceTest {
 
@@ -16,9 +13,10 @@ class ToDoServiceTest {
         //given
     DBRepository testRepo = Mockito.mock(DBRepository.class);
     ToDo newTask = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
+    String testUserId = "testuserid";
     ToDoService testService = new ToDoService(testRepo);
 
-    testService.addNew(newTask);
+    testService.addNew(newTask, testUserId);
 
 
     Mockito.verify(testRepo).save(newTask);
@@ -34,8 +32,8 @@ class ToDoServiceTest {
 
         Mockito.when(testRepo.findAll()).thenReturn(List.of(task1, task2, task3));
 
-
-        org.assertj.core.api.Assertions.assertThat(testService.getTodos()).isEqualTo(List.of(task1, task2, task3));
+        //Test überarbeiten!
+        org.assertj.core.api.Assertions.assertThat(testService.getTodos(task1.getUserId())).isEqualTo(List.of(task1, task2, task3));
 
     }
     @Test
@@ -73,8 +71,9 @@ class ToDoServiceTest {
         DBRepository testRepo = Mockito.mock(DBRepository.class);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDoService testService = new ToDoService(testRepo);
+        String testUserId = "newid";
 
-        testService.addNew(task1);
+        testService.addNew(task1, testUserId);
 
         testService.deleteTask(task1.getId());
 
@@ -89,8 +88,10 @@ class ToDoServiceTest {
         ToDoService testService = new ToDoService(testRepo);
         ToDo task1 = new ToDo("Kaffee trinken", "gemütlich", Status.DONE);
         ToDo task2 = new ToDo("Tee trinken", "hektisch", Status.IN_PROGRESS);
-        testService.addNew(task1);
-        testService.addNew(task2);
+        String testUserId1= "user1";
+        String testUserId2= "user2";
+        testService.addNew(task1, testUserId1);
+        testService.addNew(task2, testUserId2);
         Mockito.when(testRepo.findAll()).thenReturn(List.of(task2));
         testService.deleteTask(task1.getId());
         Assertions.assertThat(testRepo.findAll()).containsOnly(task2);

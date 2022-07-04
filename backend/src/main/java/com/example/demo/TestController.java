@@ -1,8 +1,12 @@
 package com.example.demo;
 
+import java.security.Principal;
 import java.util.List;
 
+import com.example.demo.MyUser.MyUser;
+import com.example.demo.MyUser.MyUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -13,15 +17,19 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
     private final ToDoService toDoService;
 
+    private final MyUserService myUserService;
+
 
     @GetMapping()
-    public List<ToDo> findAllTodos(){
-        return toDoService.getTodos();
+    public List<ToDo> findAllTodos(Principal principal){
+        MyUser myUser = myUserService.findByUserName(principal.getName());
+        return toDoService.getTodos(myUser.getUserId());
     }
 
     @PostMapping()
-    public void addToDo(@RequestBody ToDo todo){
-        toDoService.addNew(todo);
+    public void addToDo(@RequestBody ToDo todo, Principal principal){
+        MyUser myUser = myUserService.findByUserName(principal.getName());
+        toDoService.addNew(todo, myUser.getUserId());
     }
 
     @PutMapping("/next")
