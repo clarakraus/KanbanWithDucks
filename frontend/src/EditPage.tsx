@@ -18,7 +18,11 @@ export default function EditPage() {
     }, [task, newDescription]);
 
     function getTaskById(id: string){
-       return axios.get(`/api/kanban/${id}`)
+       return axios.get(`/api/kanban/${id}`, {
+           headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`
+           }
+       })
            .then(response => response.data)
     }
 
@@ -35,18 +39,22 @@ export default function EditPage() {
     }, [params.taskid])
 
     const getUpdateKanban = (item: Task) => {
-        return axios.put(`/api/kanban`, item)
+        return axios.put(`/api/kanban`, item, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(response => response.data)
             .catch(() => setErrorMessage("Ooopsies, something went wrong. Guess you have to stick to your task as it is 🫠"))
     }
 
     const updateKanban = () =>{
       item &&  getUpdateKanban({id:item.id, task:task, description:newDescription, status:item?.status})
-          .then(errorMessage => (errorMessage === "")? nav("/"):console.log(errorMessage)
+          .then(errorMessage => (errorMessage === "")? nav("/mainpage"):console.log(errorMessage)
     )
     }
     const bringMeBack = () =>{
-        nav("/")
+        nav("/mainpage")
     }
 
     return (

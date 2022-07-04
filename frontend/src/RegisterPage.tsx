@@ -12,7 +12,7 @@ export default function RegisterPage(){
     function sendUserDetails(ev:FormEvent){
         ev.preventDefault()
         createAccount(userName, password)
-  //          .then(nav("/api/login"))
+            .then(() => nav("/"))
 
     }
 

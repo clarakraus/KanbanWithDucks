@@ -28,7 +28,7 @@ public class ToDo {
     private String description;
     private Status status;
 
-    private String userID;
+    private String userId;
 
     public ToDo(String task, String description, Status status) {
         this.task = task;

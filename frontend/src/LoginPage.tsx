@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {createAccount, loginUser} from "./KanbanService";
 
 export default function LoginPage(){
@@ -12,26 +12,27 @@ export default function LoginPage(){
     function sendUserDetails(ev:FormEvent){
         ev.preventDefault()
         loginUser(userLoginName, userLoginPassword)
-            .then(localStorage.setItem("token", response.data.token))
-            .then(nav("/"))
-
-
+            .then((loginResponse) =>localStorage.setItem("token", loginResponse.token))
+            .then(() => nav("/mainpage"))
     }
 
 
     return(
         <>
             <div>
-                <h4>create account</h4>
+                <h4>Log In</h4>
             </div>
             <div>
                 <form onSubmit={sendUserDetails}>
-                    <input type="text" placeholder="choose a username" value={userLoginName}
+                    <input type="text" placeholder="username" value={userLoginName}
                            onChange={event => setUserLoginName(event.target.value)}/>
-                    <input type="password" placeholder="choose a safe password" value={userLoginPassword}
+                    <input type="password" placeholder="password" value={userLoginPassword}
                            onChange={event => setUserLoginPassword(event.target.value)}/>
-                    <input type="submit" value="create account" />
+                    <input type="submit" value="log in" />
                 </form>
+                <div>
+                    <Link to={"/register"}>No account yet?</Link>
+                </div>
             </div>
         </>
     )

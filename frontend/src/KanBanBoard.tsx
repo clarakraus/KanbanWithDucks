@@ -13,8 +13,12 @@ export function KanBanBoard(){
     const taskComponents = taskArray.map(t => <KanBanKarte key= {t.id} task={t} onTaskChange={getStuff}/>)
 
     function getStuff(){
-        fetch("/api/kanban", {method: "GET"})
-            .then(response =>response.json())
+       return axios.get("/api/kanban", {
+           headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`
+           }
+       })
+            .then(response => response.data)
             .then(data => setTaskArray(data))
     }
 
@@ -24,7 +28,12 @@ export function KanBanBoard(){
 
     function taskClick (){
         axios.post("/api/kanban",
-            {task: newTask, description: newDescription, status: EnumStatus.OPEN})
+            {task: newTask, description: newDescription, status: EnumStatus.OPEN},
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(getStuff)
             .then(() => setNewTask(""))
             .then(() => setNewDescription(""))

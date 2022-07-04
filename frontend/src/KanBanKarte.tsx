@@ -18,7 +18,11 @@ export function KanBanKarte(props: KanBanKartenProps) {
     const [duckInProgress, setDuckInProgress] = useState(false)
 
     function setNext() {
-        axios.put(`${url}/next`, props.task)
+        axios.put(`${url}/next`, props.task, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(props.onTaskChange)
     }
 
@@ -32,12 +36,21 @@ export function KanBanKarte(props: KanBanKartenProps) {
 
 
     function setPrevious() {
-        axios.put(`${url}/prev`, props.task)
+        axios.put(`${url}/prev`, props.task, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(props.onTaskChange)
     }
 
     const deleteTask = () => {
-        axios.delete(`${url}/${props.task.id}`)
+        axios.delete(`${url}/${props.task.id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(props.onTaskChange)
     }
 
