@@ -18,6 +18,10 @@ public class MyUser {
     private String userId;
     @Indexed(unique = true)
     private String username;
-
     private String password;
+
+    public MyUser( String username, String password){
+        this.username= username;
+        this.password= password;
+    }
 }

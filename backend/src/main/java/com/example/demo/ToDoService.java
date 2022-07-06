@@ -19,6 +19,7 @@ public class ToDoService {
 
     public void addNew(ToDo todo, String userId) {
         todo.setUserId(userId);
+        todo.setStatus(Status.OPEN);
         toDoRepo.save(todo);
     }
     public void changeState(ToDo todo) {
