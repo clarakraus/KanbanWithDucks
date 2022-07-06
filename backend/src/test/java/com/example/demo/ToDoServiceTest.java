@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.Optional;
 
 class ToDoServiceTest {
 
@@ -103,7 +104,13 @@ class ToDoServiceTest {
         ToDoService testService = new ToDoService(testRepo);
         ToDo task = new ToDo("taskId", "Enten streicheln", "Mit rechter Hand", Status.OPEN, "defaultId");
 
+        Mockito.when(testRepo.findById("taskId")).thenReturn(Optional.of(task));
+
         testService.changeState(task);
+
+        ToDo expected = new ToDo("taskId", "Enten streicheln", "Mit rechter Hand", Status.IN_PROGRESS, "defaultId");
+
+        Mockito.verify(testRepo).save(expected);
 
         //test noch nicht fertig
 
