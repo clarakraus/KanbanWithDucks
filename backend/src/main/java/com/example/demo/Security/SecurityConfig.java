@@ -29,6 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().disable().authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/user", "/api/login").permitAll()
+                    .antMatchers(HttpMethod.GET, "/*", "/index*", "/static/**", "/*.js", "/*.json", "/*.ico","/*.png").permitAll()
                     .antMatchers("/**").authenticated()
                     .and()
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
