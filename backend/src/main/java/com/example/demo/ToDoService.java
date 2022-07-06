@@ -29,6 +29,7 @@ public class ToDoService {
             case IN_PROGRESS -> wantedToDo.setStatus(Status.DONE);
 
         }
+
         toDoRepo.save(wantedToDo);
     }
 
