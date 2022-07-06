@@ -1,6 +1,6 @@
 import {FormEvent, useState} from "react";
-import {Link, NavLink, useNavigate} from "react-router-dom";
-import {createAccount, loginUser} from "./KanbanService";
+import {Link, useNavigate} from "react-router-dom";
+import {loginUser} from "./KanbanService";
 
 export default function LoginPage(){
 
