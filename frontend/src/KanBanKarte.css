@@ -1,0 +1,7 @@
+.TaskCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #E3B7A0;
+    color: darkslategray;
+}
